@@ -127,17 +127,16 @@ if uploaded_file is not None:
         st.session_state.important_questions_result = ""
 
         st.session_state.answer_result = ""
-           
-            pdf_text = st.session_state.last_pdf_text
-            
-            st.success("PDF ready hai!") 
- 
-
-            language = st.selectbox(
-                "🌐Answer language",
-                ["Hindi", "English", "Hinglish"],
-                key="answer_language"
-            )
+        
+        pdf_text = st.session_state.last_pdf_text
+        
+        st.success("PDF ready hai!") 
+        
+        language = st.selectbox(
+            "🌐Answer language",
+            ["Hindi", "English", "Hinglish"],
+            key="answer_language"
+        )
 
             st.divider()
 
