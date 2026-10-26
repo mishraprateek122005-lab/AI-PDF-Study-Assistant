@@ -132,7 +132,7 @@ if uploaded_file is not None:
                 st.divider()
                  
 
-                if st.button("Generate Summary"):
+                if st.button("Generate Summary", type="primary"):
                     st.success("Summary button click ho rha hai!")
                     with st.spinner("Summary ban rahi hai..."):
                         try:
