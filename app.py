@@ -202,12 +202,12 @@ if uploaded_file is not None:
                             )
                     except Exception as e:
                          st.error(f" Important Questions error: {e}")
-
-                 if st.session_state.important_questions_result:
-                     st.markdown("### 📝 Important Questions and Answers")
-                     st.markdown(st.session_state.important_questions_result) 
+                        
+                    if st.session_state.important_questions_result:
+                        st.markdown("### 📝 Important Questions and Answers")
+                        st.markdown(st.session_state.important_questions_result) 
     
-              except Exception as e:
+    except Exception as e:
                   st.error(f"PDF read karne mein error: {e}")
 
 else:
