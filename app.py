@@ -94,8 +94,11 @@ if uploaded_file is not None:
                 with st.spinner("PDF padh raha hoon..."):
                     pages = []
                     
-                    with fitz.open(stream=uploaded_file.getvalue(), filetype="pdf") 
-                    as pdf:
+                    with fitz.open(
+                        stream=uploaded_file.getvalue(), 
+                        filetype="pdf"
+                    ) as pdf:
+                        
                         total_pages = len(pdf)
 
                         for page_number, page in enumerate(pdf, start=1):
