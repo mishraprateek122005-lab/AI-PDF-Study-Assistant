@@ -200,7 +200,7 @@ if uploaded_file is not None:
                                 "when supported by the PDF text.",
                                 language
                             )
-                     except Exception as e:
+                    except Exception as e:
                          st.error(f" Important Questions error: {e}")
 
                  if st.session_state.important_questions_result:
