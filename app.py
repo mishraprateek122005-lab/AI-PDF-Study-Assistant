@@ -129,9 +129,9 @@ if uploaded_file is not None:
 
         st.session_state.answer_result = ""
         
-        pdf_text = st.session_state.last_pdf_text
+        pdf_text = st.session_state..get("last_pdf_text", "")
 
-        if not pdf_text:
+        if not pdf_text.strip:
             st.error("PDF text nahi mila. PDF ko dobara upload karo.")
             st.stop()
         
