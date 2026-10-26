@@ -138,33 +138,33 @@ if uploaded_file is not None:
             key="answer_language"
         )
 
-            st.divider()
+        st.divider()
 
-            st.subheader("💬 Ask Questions from PDF")
+        st.subheader("💬 Ask Questions from PDF")
 
-            question = st.text_input(
-                "Apna question likho:",
-                placeholder="What is Artificial Intelligence?",
-                key="pdf_question"
-            )
+        question = st.text_input(
+            "Apna question likho:",
+            placeholder="What is Artificial Intelligence?",
+            key="pdf_question"
+        )
             
-            if st.button("🔍 Ask AI", type="primary"):
-                if not question.strip():
-                    st.warning("Pehle apna question likho.")
-                else:
-                    try:
-                        with st.spinner("AI answer bana raha hai..."):
-                            st.session_state.answer_result = ask_ai(pdf_text, question.strip(), language)
+        if st.button("🔍 Ask AI", type="primary"):
+            if not question.strip():
+                st.warning("Pehle apna question likho.")
+            else:
+                try:
+                    with st.spinner("AI answer bana raha hai..."):
+                        st.session_state.answer_result = ask_ai(pdf_text, question.strip(), language)
 
-                    except Exception as e:
+                except Exception as e:
                             st.error(f"AI error: {e}")
-                if st.session_state.answer_result:
-                    st.subheader("Answer")
-                    st.markdown(st.session_state.answer_result) 
-
-                st.divider()
-                st.subheader("📖 PDF Summary")
-                if st.button("Generate Summary", key="summary_button"):
+        if st.session_state.answer_result:
+            st.subheader("Answer")
+            st.markdown(st.session_state.answer_result)
+            
+            st.divider()
+            st.subheader("📖 PDF Summary")
+            if st.button("Generate Summary", key="summary_button"):
                     try:
                         with st.spinner("Summary ban rahi hai..."):
                             st.session_state.summary_result = ask_ai(
