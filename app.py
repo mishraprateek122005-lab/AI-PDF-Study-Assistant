@@ -16,7 +16,10 @@ st.set_page_config(
 st.title("📚 AI PDF Study Assistant")
 st.write("Upload your PDF and ask question about its content.")
 
-api_key = os.getenv("GEMINI_API_KEY")
+try:
+    api_key = st.secrets["GEMINI_API_KEY"]
+except Exception:
+    api_key = os.getenv("GEMINI_API_KEY") 
 
 if not api_key:
     st.error("API key nahi mili. PDF_AI folder ki .env file check karo."
