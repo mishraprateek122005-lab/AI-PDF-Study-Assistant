@@ -165,15 +165,15 @@ if uploaded_file is not None:
             st.divider()
             st.subheader("📖 PDF Summary")
             if st.button("Generate Summary", key="summary_button"):
-                    try:
-                        with st.spinner("Summary ban rahi hai..."):
-                            st.session_state.summary_result = ask_ai(
-                                pdf_text,
-                                "Summarize this PDF using headings, definitions "
-                                "and important points.", language
-                            )
-                     except Exception as e:
-                         st.error(f"Summary error: {e}")
+                try:
+                    with st.spinner("Summary ban rahi hai..."):
+                        st.session_state.summary_result = ask_ai(
+                            pdf_text,
+                            "Summarize this PDF using headings, definitions "
+                            "and important points.", language
+                        )
+                except Exception as e:
+                    st.error(f"Summary error: {e}")
 
                 if st.session_state.summary_result:
                     st.markdown("### PDF Summary")
