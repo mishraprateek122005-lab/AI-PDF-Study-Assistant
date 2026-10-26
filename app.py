@@ -108,6 +108,7 @@ if uploaded_file is not None:
                                 pages.append(f"\n[PAGE {page_number}]\n{page_text}") 
                                 
                                 pdf_text = "\n".join(pages)
+                                st.session_state.last_pdf_text = pdf_text 
                                 
                             if not pdf_text.strip():
                                 st.warning("PDF mein readable text nahi mila. "
@@ -129,6 +130,10 @@ if uploaded_file is not None:
         st.session_state.answer_result = ""
         
         pdf_text = st.session_state.last_pdf_text
+
+        if not pdf_text:
+            st.error("PDF text nahi mila. PDF ko dobara upload karo.")
+            st.stop()
         
         st.success("PDF ready hai!") 
         
