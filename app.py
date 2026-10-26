@@ -211,9 +211,8 @@ if uploaded_file is not None:
                     if st.session_state.important_questions_result:
                         st.markdown("### 📝 Important Questions and Answers")
                         st.markdown(st.session_state.important_questions_result) 
-    
     except Exception as e:
-                  st.error(f"PDF read karne mein error: {e}")
+        st.error(f"PDF read karne mein error: {e}")
 
 else:
     st.info("Shuru Karne ke liye apni PDF upload karo.")
