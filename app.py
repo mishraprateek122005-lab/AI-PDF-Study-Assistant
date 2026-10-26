@@ -14,7 +14,7 @@ st.set_page_config(
 st.title("📚 AI PDF Study Assistant")
 st.write("Upload your PDF and ask question about its content.")
 
-env_path = path(__file__).resolve().parent / ".env"
+env_path = Path(__file__).resolve().parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
 api_key = os.getenv("GEMINI_API_KEY")
