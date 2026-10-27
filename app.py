@@ -92,7 +92,7 @@ USER REQUEST:
 """
 
     response = client.models.generate_content(
-        model="gemini-2.8-flash",
+        model="gemini-5.8-flash",
         contents=prompt
     )
 
