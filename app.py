@@ -21,7 +21,7 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
     try:
-        api_key = st.secrets.get["GEMINI_API_KEY"]
+        api_key = st.secrets.get("GEMINI_API_KEY") 
     except Exception:
         api_key = None
 
@@ -84,58 +84,70 @@ uploaded_file = st.file_uploader("📝 Upload your PDF", type=["pdf"], key="pdf_
 )
 
 if uploaded_file is not None:
-
     pdf_name = uploaded_file.name
     
     try:
         # Read PDF only when needed, and keep its text in session state
-        if (st.session_state.last_pdf_name != pdf_name
-            or not st.session_state.last_pdf_text):
-                with st.spinner("PDF padh raha hoon..."):
-                    pages = []
-                    
-                    with fitz.open(
-                        stream=uploaded_file.getvalue(), 
-                        filetype="pdf"
-                    ) as pdf:
-                        
-                        total_pages = len(pdf)
-
-                        for page_number, page in enumerate(pdf, start=1):
-                            page_text = page.get_text()
-                            
-                            if page_text.strip():
-                                pages.append(f"\n[PAGE {page_number}]\n{page_text}") 
-                                
-                                pdf_text = "\n".join(pages)
-                                st.session_state.last_pdf_text = pdf_text 
-                                
-                            if not pdf_text.strip():
-                                st.warning("PDF mein readable text nahi mila. "
-                                           "Agar PDF scanned hai, to OCR ki zaroorat ho sakti hai.")
-                                st.stop()
-                                
-                            max_chars = 80000
-
-                            if len(pdf_text) > max_chars:
-                                pdf_text = pdf_text[:max_chars]
-                                st.info("PDF badi hai, isliye pehle 80,000 characters use kiye jayenge.")
-
-        st.session_state.last_pdf_name = pdf_name
-        st.session_state.last_pdf_text = pdf_text
-
-        st.session_state.summary_result = ""
-        st.session_state.important_questions_result = ""
-
-        st.session_state.answer_result = ""
+        pdf_text = ""
         
-        pdf_text = st.session_state.get("last_pdf_text", "")
+        if (
+            st.session_state.last_pdf_name == pdf_name
+            and st.session_state.last_pdf_text
+        ):
+            pdf_text = st.session_state.last_pdf_text
 
-        if not pdf_text.strip:
+        else:
+            with st.spinner("PDF padh raha hoon..."):
+                pages = []
+                    
+                with fitz.open(
+                    stream=uploaded_file.getvalue(), 
+                    filetype="pdf"
+                ) as pdf:
+                    
+                    total_pages = len(pdf)
+
+                    for page_number, page in enumerate(pdf, start=1):
+                        page_text = page.get_text()
+                            
+                        if page_text.strip():
+                            pages.append(
+                                f"\n[PAGE {page_number}]\n{page_text}"
+                            ) 
+                            
+                pdf_text = "\n".join(pages)
+                
+                if not pdf_text.strip():
+                    st.warning(
+                        "PDF mein readable text nahi mila. "
+                        "Agar PDF scanned hai, to OCR ki zaroorat ho sakti hai."
+                    )
+                    st.stop()
+                    
+                max_chars = 80000
+
+                if len(pdf_text) > max_chars:
+                    pdf_text = pdf_text[:max_chars]
+                    st.info(
+                        "PDF badi hai, isliye pehle 80,000"
+                        "characters use kiye jayenge."
+                    ) 
+                    
+                st.session_state.last_pdf_name = pdf_name
+                st.session_state.last_pdf_text = pdf_text
+
+                st.session_state.summary_result = ""
+                st.session_state.important_questions_result = ""
+                st.session_state.answer_result = ""
+
+        if not pdf_text.strip():
             st.error("PDF text nahi mila. PDF ko dobara upload karo.")
             st.stop()
         
         st.success("PDF ready hai!") 
+
+    except Exception as e:
+        st.error(f"PDF read karne mein error: {e}") 
         
         language = st.selectbox(
             "🌐Answer language",
